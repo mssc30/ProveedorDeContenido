@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">ActividadesEnAndroid</string>
+    <string name="login_usuario">Usuario</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="ok">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="registrar">Registrar</string>
+    <string name="nombre">Nombre</string>
+    <string name="telefono">Telefono</string>
+    <string name="e_mail">Correo</string>
+    <string name="guardar">Guardar</string>
+
+    <string-array name="paises">
+        <item>Mexico</item>
+        <item>Estados Unidos</item>
+        <item>Cuba</item>
+        <item>Rusia</item>
+        <item>Honduras</item>
+    </string-array>
+
+</resources>

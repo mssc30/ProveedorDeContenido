@@ -10,14 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Usuario"
+        android:hint="@string/login_usuario"
         android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/txtPass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Contraseña"></EditText>
+        android:hint="@string/contrase_a"></EditText>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -28,20 +28,19 @@
             android:id="@+id/btnOk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ok" />
+            android:text="@string/ok" />
 
         <Button
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel" />
+            android:text="@string/cancel" />
 
         <Button
             android:id="@+id/btnRegistrar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Registrar" />
-
-
+            android:onClick="btnRegistrar_click"
+            android:text="@string/registrar" />
     </LinearLayout>
 </LinearLayout>

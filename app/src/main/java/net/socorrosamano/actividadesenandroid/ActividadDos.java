@@ -11,7 +11,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ActividadDos extends AppCompatActivity{
+import net.socorrosamano.actividadesenandroid.data.Usuario;
+import net.socorrosamano.actividadesenandroid.data.daoUsuarios;
+
+public class ActividadDos extends AppCompatActivity {
+    private static final int ACTIVITY_REGISTRO = 1000;
     //Relacionar elementos del XML con java
     Button btnOk, btnCancel, btnRegistrar;
     EditText txtUser, txtPass;
@@ -25,11 +29,11 @@ public class ActividadDos extends AppCompatActivity{
         //buscar elementos del layout con su ID
         //regresa un view= boton, edit text
         //puede o no especificarse el cast
-        txtPass=(EditText) findViewById(R.id.txtPass);
-        txtUser= (EditText) findViewById(R.id.txtUser);
-        btnCancel=findViewById(R.id.btnCancel);
-        btnOk=findViewById(R.id.btnOk);
-        btnRegistrar=findViewById(R.id.btnRegistrar);
+        txtPass = (EditText) findViewById(R.id.txtPass);
+        txtUser = (EditText) findViewById(R.id.txtUser);
+        btnCancel = findViewById(R.id.btnCancel);
+        btnOk = findViewById(R.id.btnOk);
+        //btnRegistrar = findViewById(R.id.btnGuardarUser);
 
         //implementar al boton el metodo click
         //btnOk.setOnClickListener(new View.OnClickListener() {
@@ -37,7 +41,7 @@ public class ActividadDos extends AppCompatActivity{
         //    public void onClick(View view) {
         //         Log.d("click", txtUser.getText().toString());
 
-                //tipo mensaje
+        //tipo mensaje
         //        Toast.makeText(getBaseContext(), txtUser.getText().toString(),
         //                Toast.LENGTH_LONG).show();
         //    }
@@ -45,40 +49,65 @@ public class ActividadDos extends AppCompatActivity{
 
         //con programacion funcional
         btnOk.setOnClickListener(v -> {
-            Log.d("click", txtUser.getText().toString());
+            //Log.d("click", txtUser.getText().toString());
 
-            //Toast.makeText(getBaseContext(),
-              //  txtUser.getText().toString(), Toast.LENGTH_LONG).show();
 
-            //objeto para poder iniciar y utilizar los componentes de una app
-            //permite pasar mensajes a la invocacion de otros componentes
-            Intent intent = new Intent(ActividadDos.this,
-                    MainActivity.class);
+            //Ver si el usuario está en la base de datos
+            daoUsuarios dao = new daoUsuarios(getApplicationContext());
 
-            //mandar datos a otra actividad con metodo put
-            intent.putExtra("usuario", txtUser.getText().toString());
-            intent.putExtra("id", 789);
+            Usuario usuarioAutenticado = dao.autenticar(new Usuario(txtUser.getText().toString(), txtPass.getText().toString()));
 
-            //arrancar la actividad
-            startActivity(intent);
+            //si es diferente de 0 el usuario se encontro
+            if (usuarioAutenticado.getID() != 0) {
+
+                //objeto para poder iniciar y utilizar los componentes de una app
+                //permite pasar mensajes a la invocacion de otros componentes
+                Intent intent = new Intent(ActividadDos.this, MainActivity.class);
+
+                //mandar el objeto autenticado a la actividad
+                intent.putExtra("usuario", usuarioAutenticado);
+
+                //arrancar la actividad
+                startActivity(intent);
+            } else {
+                Toast.makeText(getBaseContext(),
+                        txtUser.getText().toString() + " SIN ACCESO",
+                        Toast.LENGTH_LONG).show();
+            }
         });
 
-        btnRegistrar.setOnClickListener(v->{
-            Intent intent = new Intent(ActividadDos.this,
-                    ActividadRegistrarUser.class);
-            startActivity(intent);
+        btnCancel.setOnClickListener(v -> {
+            finish();
         });
 
-        btnCancel.setOnClickListener(v->{finish();});
 
         //monitorear con Logcat
         Log.d("ciclovida", "paso por onCreate");
-         //w -> warning
+        //w -> warning
         //v -> verbose
         //i -> information
         //e -> error
         //d -> debug
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case ACTIVITY_REGISTRO:
+                if (resultCode == RESULT_OK) {
+                    Toast.makeText(this, "Usuario Registrado", Toast.LENGTH_SHORT).show();
+                    Usuario usnu = (Usuario) data.getSerializableExtra("Usuario");
+                    txtUser.setText(usnu.getEmail());
+                } else {
+                    Toast.makeText(this, "Usuario NO Registrado", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case 2000:
+                break;
+        }
     }
 
     @Override
@@ -115,6 +144,13 @@ public class ActividadDos extends AppCompatActivity{
     protected void onDestroy() {
         super.onDestroy();
         Log.d("ciclovida", "paso por onDestroy");
+    }
+
+    public void btnRegistrar_click(View view) {
+        Intent intent = new Intent(getBaseContext(), ActividadRegistrarUser.class);
+
+        startActivityForResult(intent, ACTIVITY_REGISTRO);
+
     }
 }
 
