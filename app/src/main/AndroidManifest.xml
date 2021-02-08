@@ -2,13 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.socorrosamano.actividadesenandroid">
 
-    <permission
-        android:name="net.socorrosamano.actividadesenandroid.READ_DATABASE"
-        android:protectionLevel="normal" />
-
-    <permission
-        android:name="net.socorrosamano.actividadesenandroid.WRITE_DATABASE"
-        android:protectionLevel="normal" />
+    <permission android:name="net.socorrosamano.actividadesenandroid.provider.WRITE_PROVIDER"/>
+    <permission android:name="net.socorrosamano.actividadesenandroid.provider.WRITE_PROVIDER"/>
 
     <application
         android:allowBackup="true"
@@ -31,8 +26,13 @@
         <provider
             android:authorities="net.socorrosamano.actividadesenandroid.provider"
             android:name=".provider.MiProvider"
-            android:exported="true" >
-    </provider>
+            android:readPermission="net.socorrosamano.actividadesenandroid.provider.WRITE_PROVIDER"
+            android:writePermission="net.socorrosamano.actividadesenandroid.provider.WRITE_PROVIDER"
+            android:exported="true"
+            android:grantUriPermissions="true"
+            android:enabled="true"
+            >
+        </provider>
 
     </application>
 </manifest>
