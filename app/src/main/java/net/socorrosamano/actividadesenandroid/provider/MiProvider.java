@@ -86,11 +86,9 @@ public class MiProvider extends ContentProvider {
                 break;
 
             case 2:
-                tipo = "vnd.android.cursor.item/vnd.net.socorrosamano.actividadesenandroid.provider.usuarios";
-                break;
 
             case 3:
-                tipo = "vnd.android.cursor.dir/vnd.net.socorrosamano.actividadesenandroid.provider.usuarios";
+                tipo = "vnd.android.cursor.item/vnd.net.socorrosamano.actividadesenandroid.provider.usuarios";
                 break;
         }
 
